@@ -1,4 +1,4 @@
-package ec.dev.samagua.ntt_data_challenge_clients.services_utils;
+package ec.dev.samagua.ntt_data_challenge_clients.services_models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,5 +13,9 @@ import java.util.List;
 @Builder
 public class ServiceResult<E> {
     private E value;
-    private List<String> errors;
+    private List<ServiceResultError> errors;
+
+    public boolean hasErrors() {
+        return errors != null && !errors.isEmpty();
+    }
 }

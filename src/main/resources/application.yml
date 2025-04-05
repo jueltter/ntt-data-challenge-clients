@@ -1,0 +1,13 @@
+server:
+  port: 8080
+eureka:
+  client:
+    enabled: false
+spring:
+  application:
+    name: ntt-data-challenge-clients
+  r2dbc:
+    url: "r2dbc:postgresql://localhost:5432/ntt-data-challenge-clients"
+    username: postgres
+    password: password
+    show-sql: true

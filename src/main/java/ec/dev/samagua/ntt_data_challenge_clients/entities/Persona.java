@@ -1,39 +1,36 @@
 package ec.dev.samagua.ntt_data_challenge_clients.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@MappedSuperclass
-public class Persona {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+public abstract class Persona {
     @Id
-    @Column(name = "id")
+    @Column(value = "id")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(value = "nombre")
     private String nombre;
 
-    @Column(name = "genero")
+    @Column(value = "genero")
     private String genero;
 
-    @Column(name = "fecha_nacimiento")
-    private Date fechaNacimiento;
+    @Column(value = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
 
-    @Column(name= "identificacion")
+    @Column(value= "identificacion")
     private String identificacion;
 
-    @Column(name = "direccion")
+    @Column(value = "direccion")
     private String direccion;
 
-    @Column(name= "telefono")
+    @Column(value= "telefono")
     private String telefono;
 }

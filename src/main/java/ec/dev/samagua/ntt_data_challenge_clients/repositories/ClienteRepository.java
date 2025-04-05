@@ -1,34 +1,35 @@
 package ec.dev.samagua.ntt_data_challenge_clients.repositories;
 
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
-import ec.dev.samagua.ntt_data_challenge_clients.jpa_repositories.ClienteJpaRepository;
+import ec.dev.samagua.ntt_data_challenge_clients.reactive_repositories.ClienteReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 @Slf4j
 public class ClienteRepository {
 
-    private final ClienteJpaRepository repository;
+    private final ClienteReactiveRepository repository;
 
-    public Optional<Cliente> save(Cliente cliente) {
-        return Optional.of(repository.save(cliente));
+    public Mono<Cliente> save(Cliente cliente) {
+        return repository.save(cliente);
     }
 
-    public void delete(Cliente cliente) {
-        repository.delete(cliente);
+    public Mono<Void> delete(Cliente cliente) {
+        return repository.delete(cliente);
     }
 
-    public Optional<Cliente> findById(Long id) {
+    public Mono<Cliente> findById(Long id) {
+
         return repository.findById(id);
     }
 
-    public List<Cliente> findAll() {
-        return repository.findAll();
+    public Mono<List<Cliente>> findAll() {
+        return repository.findAll().collectList();
     }
 }

@@ -1,7 +1,9 @@
-package ec.dev.samagua.ntt_data_challenge_clients.services;
+package ec.dev.samagua.ntt_data_challenge_clients.services_impl;
 
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
-import ec.dev.samagua.ntt_data_challenge_clients.services_utils.ServiceResult;
+import ec.dev.samagua.ntt_data_challenge_clients.repositories.ClienteRepository;
+import ec.dev.samagua.ntt_data_challenge_clients.services.ClienteService;
+import ec.dev.samagua.ntt_data_challenge_clients.services_models.ServiceResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
+
+    private final ClienteRepository repository;
 
 
     @Override
@@ -31,7 +35,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Mono<ServiceResult<Cliente>> delete(Cliente cliente) {
+    public Mono<ServiceResult<Void>> delete(Cliente cliente) {
         return null;
     }
 
@@ -42,6 +46,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Mono<ServiceResult<List<Cliente>>> findAll() {
-        return null;
+       Mono<List<Cliente>> entities = repository.findAll();
+       return entities.map(obj -> new ServiceResult<>(obj, null));
     }
 }
