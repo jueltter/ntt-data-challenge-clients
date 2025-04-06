@@ -24,9 +24,9 @@ public class ClienteController {
     private final ClienteDtoMapper mapper; // ignore
 
     @GetMapping("/clientes")
-    public Mono<ResponseEntity<ControllerResult<List<ClienteDto>>>> findAll() {
+    public Mono<ResponseEntity<ControllerResult<List<ClienteDto>>>> findAll(@RequestParam(name = "cliente-id", required = false) String clienteId) {
         log.debug("executing GET /clientes");
-        Mono<List<Cliente>> entities = service.findAll();
+        Mono<List<Cliente>> entities = service.search(clienteId);
         return entities.map(obj -> {
             ControllerResult<List<ClienteDto>> body = ControllerResult.getSuccessResult(obj.stream()
                     .map(mapper::entityToDtoObfuscated)

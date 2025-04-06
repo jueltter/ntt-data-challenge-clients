@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -132,12 +133,10 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Mono<Cliente> findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Mono<List<Cliente>> findAll() {
-       return repository.findAll();
+    public Mono<List<Cliente>> search(String clienteId) {
+        if (clienteId == null) {
+            return repository.findAll();
+        }
+       return repository.findByClienteId(clienteId);
     }
 }

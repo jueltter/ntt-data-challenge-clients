@@ -29,16 +29,11 @@ public class ClienteRepository {
                 .doOnError(error -> log.error("Error counting clients by identification", error));
     }
 
-    public Mono<Cliente> findByIdentificacion(String identificacion) {
-        return repository.findByIdentificacion(identificacion)
-                .onErrorMap(RepositoryException::getReadException)
-                .doOnError(error -> log.error("Error finding client by identification", error));
-    }
-
-    public Mono<Cliente> findByClienteId(String clienteId) {
+    public Mono<List<Cliente>> findByClienteId(String clienteId) {
         return repository.findByClienteId(clienteId)
                 .onErrorMap(RepositoryException::getReadException)
-                .doOnError(error -> log.error("Error finding client by client ID", error));
+                .doOnError(error -> log.error("Error finding client by client ID", error))
+                .map(List::of);
     }
 
     public Mono<Cliente> save(Cliente cliente) {

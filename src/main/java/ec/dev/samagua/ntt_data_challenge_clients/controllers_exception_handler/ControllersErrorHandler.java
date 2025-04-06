@@ -32,14 +32,13 @@ public class ControllersErrorHandler {
 
         return Mono.just(ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(body));
+                .body(body))
+                .doFinally(signal -> log.error("An error has occurred while validating data", ex));
     }
 
     //@ExceptionHandler({ServerWebInputException.class, DecodingException.class, Exception.class})
     @ExceptionHandler(Exception.class)
     public Mono<ResponseEntity<ControllerResult<Void>>> handleGeneric(Exception ex) {
-        log.error("An unhandled error has occurred while processing your request", ex);
-
         ControllerResult<Void> body = ControllerResult.getErrorResult("UNHANDLED_EXCEPTION",  "An unhandled error has occurred while processing your request", KeyValuePair.<String, String>builder()
                         .key(ex.getClass().getCanonicalName())
                         .value(ex.getMessage())
@@ -47,7 +46,8 @@ public class ControllersErrorHandler {
 
         return Mono.just(ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(body));
+                .body(body))
+                .doFinally(signal -> log.error("An unhandled error has occurred while processing your request", ex));
     }
 
 }
