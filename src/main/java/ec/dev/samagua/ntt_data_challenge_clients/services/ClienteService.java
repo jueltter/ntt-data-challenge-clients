@@ -10,5 +10,5 @@ public interface ClienteService {
     Mono<Cliente> update(Long id, Cliente newData);
     Mono<Cliente> patch(Long id, Cliente newData);
     Mono<Void> delete(Long id);
-    Mono<List<Cliente>> search(String clienteId);
+    Mono<List<Cliente>> search(String nombre, String clienteId);
 }

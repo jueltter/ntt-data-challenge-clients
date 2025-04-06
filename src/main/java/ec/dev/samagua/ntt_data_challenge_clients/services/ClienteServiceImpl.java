@@ -154,10 +154,10 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Mono<List<Cliente>> search(String nombre) {
-        if (nombre == null) {
+    public Mono<List<Cliente>> search(String nombre, String clienteId) {
+        if (nombre == null && clienteId == null) {
             return repository.findAll();
         }
-       return repository.findByNombre(nombre);
+       return repository.findByNombreAndClienteId(nombre, clienteId);
     }
 }

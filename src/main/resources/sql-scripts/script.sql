@@ -1,4 +1,4 @@
-drop table if exists cliente;
+drop table if exists cliente cascade;
 
 CREATE TABLE cliente (
 id BIGSERIAL PRIMARY KEY,

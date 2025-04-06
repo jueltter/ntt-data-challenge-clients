@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface ClienteReactiveRepository extends ReactiveCrudRepository<Cliente, Long> {
 
-    Flux<Cliente> findByNombre(String nombre);
+    Flux<Cliente> findByNombreOrClienteId(String nombre, String clienteId);
 
     Mono<Long> countByClienteId(String clienteId);
 

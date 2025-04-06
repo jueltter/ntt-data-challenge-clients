@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -33,13 +32,6 @@ public class ClienteRepository {
         return repository.countByNombre(nombre)
                 .onErrorMap(RepositoryException::getReadException)
                 .doOnError(error -> log.error("Error counting clients by name", error));
-    }
-
-    public Mono<List<Cliente>> findByNombre(String nombre) {
-        return repository.findByNombre(nombre)
-                .onErrorMap(RepositoryException::getReadException)
-                .doOnError(error -> log.error("Error finding client by name", error))
-                .collectList();
     }
 
     public Mono<Cliente> save(Cliente cliente) {
@@ -71,6 +63,13 @@ public class ClienteRepository {
         return repository.findAll()
                 .onErrorMap(RepositoryException::getReadException)
                 .doOnError(error -> log.error("Error finding all clients", error))
+                .collectList();
+    }
+
+    public Mono<List<Cliente>> findByNombreAndClienteId(String clienteId, String nombre) {
+        return repository.findByNombreOrClienteId(clienteId, nombre)
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error finding client by client ID", error))
                 .collectList();
     }
 }
