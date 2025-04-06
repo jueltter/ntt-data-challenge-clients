@@ -37,16 +37,9 @@ public class ClienteRepository {
 
     public Mono<List<Cliente>> findByNombre(String nombre) {
         return repository.findByNombre(nombre)
-                .defaultIfEmpty(Cliente.getDefaultInstance())
                 .onErrorMap(RepositoryException::getReadException)
                 .doOnError(error -> log.error("Error finding client by name", error))
-                .map(cliente  -> {
-                    if (!cliente.isValidId()) {
-                        return Collections.emptyList();
-                    } else {
-                        return List.of(cliente);
-                    }
-                });
+                .collectList();
     }
 
     public Mono<Cliente> save(Cliente cliente) {
