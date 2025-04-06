@@ -4,7 +4,6 @@ import ec.dev.samagua.ntt_data_challenge_clients.controllers_models.ControllerRe
 import ec.dev.samagua.ntt_data_challenge_clients.dtos.ClienteDto;
 import ec.dev.samagua.ntt_data_challenge_clients.dtos_mappers.ClienteDtoMapper;
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
 import ec.dev.samagua.ntt_data_challenge_clients.services.ClienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -61,6 +59,21 @@ public class ClienteController {
         log.debug("executing PUT /clientes, bodyToEntity: {}", entity);
 
         Mono<Cliente> entityAsMono = service.update(id, entity);
+        return entityAsMono.map(obj -> {
+            ControllerResult<ClienteDto> body = ControllerResult.getSuccessResult(mapper.entityToDtoObfuscated(obj));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(body);
+        });
+    }
+
+    @PatchMapping("/clientes/{id}")
+    public Mono<ResponseEntity<ControllerResult<ClienteDto>>> updatePatch(@PathVariable Long id, @RequestBody ClienteDto dto) {
+        Cliente entity = mapper.dtoToEntity(dto);
+        log.debug("executing PATCH /clientes, body: {}", dto);
+        log.debug("executing PATCH /clientes, bodyToEntity: {}", entity);
+
+        Mono<Cliente> entityAsMono = service.updatePatch(id, entity);
         return entityAsMono.map(obj -> {
             ControllerResult<ClienteDto> body = ControllerResult.getSuccessResult(mapper.entityToDtoObfuscated(obj));
             return ResponseEntity

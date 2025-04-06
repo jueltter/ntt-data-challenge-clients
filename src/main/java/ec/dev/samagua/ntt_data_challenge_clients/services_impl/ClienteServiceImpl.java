@@ -4,6 +4,7 @@ import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
 import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
 import ec.dev.samagua.ntt_data_challenge_clients.repositories.ClienteRepository;
 import ec.dev.samagua.ntt_data_challenge_clients.services.ClienteService;
+import ec.dev.samagua.ntt_data_challenge_clients.utils.BeanCopyUtil;
 import ec.dev.samagua.ntt_data_challenge_clients.utils.EncryptDecryptUtils;
 import ec.dev.samagua.ntt_data_challenge_clients.utils_data.DataValidationResult;
 import ec.dev.samagua.ntt_data_challenge_clients.utils_data.IdentityFieldWrapper;
@@ -85,8 +86,41 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Mono<Cliente> updatePatch(Cliente cliente) {
-        return null;
+    public Mono<Cliente> updatePatch(Long id, Cliente newData) {
+        Mono<Cliente> entityMono = repository.findById(id);
+        Mono<Long> countIdentificacionMono = repository.countByIdentificacion(newData.getIdentificacion());
+        Mono<Long> countClienteIdMono = repository.countByClienteId(newData.getClienteId());
+
+        return Mono.zip(countIdentificacionMono, countClienteIdMono, entityMono)
+                .flatMap(tuple -> {
+                    Cliente entity = tuple.getT3();
+
+                    if (!entity.isValidId()) {
+                        return Mono.error(InvalidDataException.getInstance(Collections.singletonMap("id", "is invalid")));
+                    }
+
+                    Long countIdentificacion = tuple.getT1();
+                    IdentityFieldWrapper identificacionWrapper = new IdentityFieldWrapper(countIdentificacion, Objects.equals(entity.getIdentificacion(), newData.getIdentificacion()));
+                    Long countClienteId = tuple.getT2();
+                    IdentityFieldWrapper clienteIdWrapper = new IdentityFieldWrapper(countClienteId, Objects.equals(entity.getClienteId(), newData.getClienteId()));
+
+                    DataValidationResult clientValidationResult = newData.validateForPatching(identificacionWrapper, clienteIdWrapper);
+
+                    if (!clientValidationResult.isValid()) {
+                        return Mono.error(InvalidDataException.getInstance(clientValidationResult.getErrors()));
+                    }
+
+                    if (newData.getClave() != null) {
+                        String claveAsMD5 = EncryptDecryptUtils.md5(newData.getClave());
+                        newData.setClave(claveAsMD5);
+                    }
+
+                    newData.setId(id);
+
+                    BeanCopyUtil.copyNonNullProperties(newData, entity);
+
+                    return repository.save(entity);
+                });
     }
 
     @Override
