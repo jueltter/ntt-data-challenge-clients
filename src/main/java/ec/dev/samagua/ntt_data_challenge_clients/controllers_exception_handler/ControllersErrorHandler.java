@@ -1,16 +1,14 @@
 package ec.dev.samagua.ntt_data_challenge_clients.controllers_exception_handler;
 
-import ec.dev.samagua.ntt_data_challenge_clients.controllers_models.ControllerResult;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.RepositoryException;
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.KeyValuePair;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_controllers_models.ControllerResult;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.InvalidDataException;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.RepositoryException;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.KeyValuePair;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.codec.DecodingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
 
 @RestControllerAdvice

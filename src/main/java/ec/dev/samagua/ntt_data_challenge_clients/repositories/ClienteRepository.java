@@ -1,8 +1,7 @@
 package ec.dev.samagua.ntt_data_challenge_clients.repositories;
 
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.RepositoryException;
-import ec.dev.samagua.ntt_data_challenge_clients.reactive_repositories.ClienteReactiveRepository;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.RepositoryException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

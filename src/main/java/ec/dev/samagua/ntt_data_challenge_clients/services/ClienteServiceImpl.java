@@ -1,20 +1,18 @@
-package ec.dev.samagua.ntt_data_challenge_clients.services_impl;
+package ec.dev.samagua.ntt_data_challenge_clients.services;
 
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.InvalidDataException;
 import ec.dev.samagua.ntt_data_challenge_clients.repositories.ClienteRepository;
-import ec.dev.samagua.ntt_data_challenge_clients.services.ClienteService;
 import ec.dev.samagua.ntt_data_challenge_clients.utils.BeanCopyUtil;
 import ec.dev.samagua.ntt_data_challenge_clients.utils.EncryptDecryptUtils;
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.DataValidationResult;
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.IdentityFieldWrapper;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.DataValidationResult;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.IdentityFieldWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

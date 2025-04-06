@@ -1,4 +1,4 @@
-package ec.dev.samagua.ntt_data_challenge_clients.exceptions;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions;
 
 import lombok.*;
 

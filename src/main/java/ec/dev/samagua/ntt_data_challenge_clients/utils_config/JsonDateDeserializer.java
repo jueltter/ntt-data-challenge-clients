@@ -1,4 +1,4 @@
-package ec.dev.samagua.ntt_data_challenge_clients.config;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_config;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

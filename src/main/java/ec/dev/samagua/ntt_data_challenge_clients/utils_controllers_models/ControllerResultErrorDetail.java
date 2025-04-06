@@ -1,4 +1,4 @@
-package ec.dev.samagua.ntt_data_challenge_clients.controllers_models;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_controllers_models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

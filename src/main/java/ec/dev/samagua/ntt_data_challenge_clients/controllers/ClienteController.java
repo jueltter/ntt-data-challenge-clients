@@ -1,6 +1,6 @@
 package ec.dev.samagua.ntt_data_challenge_clients.controllers;
 
-import ec.dev.samagua.ntt_data_challenge_clients.controllers_models.ControllerResult;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_controllers_models.ControllerResult;
 import ec.dev.samagua.ntt_data_challenge_clients.dtos.ClienteDto;
 import ec.dev.samagua.ntt_data_challenge_clients.dtos_mappers.ClienteDtoMapper;
 import ec.dev.samagua.ntt_data_challenge_clients.entities.Cliente;

@@ -1,8 +1,8 @@
-package ec.dev.samagua.ntt_data_challenge_clients.controllers_models;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_controllers_models;
 
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
-import ec.dev.samagua.ntt_data_challenge_clients.exceptions.RepositoryException;
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.KeyValuePair;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.InvalidDataException;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions.RepositoryException;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.KeyValuePair;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

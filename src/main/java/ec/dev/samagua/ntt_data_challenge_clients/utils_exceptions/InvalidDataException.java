@@ -1,13 +1,11 @@
-package ec.dev.samagua.ntt_data_challenge_clients.exceptions;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_exceptions;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

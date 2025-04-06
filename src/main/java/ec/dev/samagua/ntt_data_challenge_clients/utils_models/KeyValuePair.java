@@ -1,4 +1,4 @@
-package ec.dev.samagua.ntt_data_challenge_clients.exceptions;
+package ec.dev.samagua.ntt_data_challenge_clients.utils_models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RepositoryExceptionDetail {
-    private String code;
-    private String message;
+public class KeyValuePair<E, T> {
+    private E key;
+    private T value;
 }

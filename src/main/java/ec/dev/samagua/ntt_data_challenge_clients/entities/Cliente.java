@@ -1,7 +1,7 @@
 package ec.dev.samagua.ntt_data_challenge_clients.entities;
 
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.DataValidationResult;
-import ec.dev.samagua.ntt_data_challenge_clients.utils_data.IdentityFieldWrapper;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.DataValidationResult;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_models.IdentityFieldWrapper;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.relational.core.mapping.Column;

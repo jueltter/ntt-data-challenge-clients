@@ -1,9 +1,5 @@
 package ec.dev.samagua.ntt_data_challenge_clients.entities;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ec.dev.samagua.ntt_data_challenge_clients.config.JsonDateDeserializer;
-import ec.dev.samagua.ntt_data_challenge_clients.config.JsonDateSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
@@ -11,7 +7,6 @@ import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
