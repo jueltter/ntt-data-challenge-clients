@@ -62,7 +62,8 @@ public class ClienteRepository {
     public Mono<Cliente> findById(Long id) {
         return repository.findById(id)
                 .onErrorMap(RepositoryException::getReadException)
-                .doOnError(error -> log.error("Error finding client", error));
+                .doOnError(error -> log.error("Error finding client", error))
+                .defaultIfEmpty(Cliente.getDefaultInstance());
     }
 
     public Mono<List<Cliente>> findAll() {

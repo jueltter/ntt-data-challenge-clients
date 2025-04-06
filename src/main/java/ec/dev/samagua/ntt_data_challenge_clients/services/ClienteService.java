@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ClienteService {
     Mono<Cliente> create(Cliente cliente);
-    Mono<Cliente> update(Cliente cliente);
+    Mono<Cliente> update(Long id, Cliente newData);
     Mono<Cliente> updatePatch(Cliente cliente);
     Mono<Void> delete(Cliente cliente);
     Mono<Cliente> findById(Long id);
