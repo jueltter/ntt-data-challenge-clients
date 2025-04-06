@@ -1,7 +1,8 @@
 package ec.dev.samagua.ntt_data_challenge_clients.controllers_models;
 
+import ec.dev.samagua.ntt_data_challenge_clients.exceptions.InvalidDataException;
 import ec.dev.samagua.ntt_data_challenge_clients.exceptions.RepositoryException;
-import ec.dev.samagua.ntt_data_challenge_clients.services_models.ServiceResultError;
+import ec.dev.samagua.ntt_data_challenge_clients.utils_data.KeyValuePair;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,26 @@ public class ControllerResult<E> {
                 .build();
     }
 
+    public static ControllerResult<Void> getErrorResultFromInvalidDataException(InvalidDataException exception) {
+        List<ControllerResultErrorDetail> details = exception.getErrors().entrySet().stream().map(entry -> ControllerResultErrorDetail.builder()
+                        .field(entry.getKey())
+                        .message(entry.getValue())
+                        .build())
+                .toList();
 
-    public static <E> ControllerResult<E> getErrorResultFromRepositoryException(RepositoryException exception) {
+        ControllerResultError error = ControllerResultError.builder()
+                .code(exception.getCode())
+                .message(exception.getMessage())
+                .details(details)
+                .build();
+
+        return ControllerResult.<Void>builder()
+                .status("error")
+                .error(error)
+                .build();
+    }
+
+    public static ControllerResult<Void> getErrorResultFromRepositoryException(RepositoryException exception) {
         List<ControllerResultErrorDetail> details = exception.getDetails().stream().map(detail -> ControllerResultErrorDetail.builder()
                         .code(detail.getCode())
                         .message(detail.getMessage())
@@ -39,28 +58,23 @@ public class ControllerResult<E> {
                 .details(details)
                 .build();
 
-        return ControllerResult.<E>builder()
+        return ControllerResult.<Void>builder()
                 .status("error")
                 .error(error)
                 .build();
     }
 
-    public static <E> ControllerResult<E> getErrorResult(String code, String message, List<ServiceResultError> serviceErrors) {
-        List<ControllerResultErrorDetail> details = serviceErrors != null ? serviceErrors.stream().map(error -> ControllerResultErrorDetail.builder()
-                        .code(error.getCode())
-                        .message(error.getMessage())
-                        .field(error.getField())
-                        .value(error.getValue())
-                        .build())
-                .toList() : null;
-
-        ControllerResultError error = ControllerResultError.builder()
+    public static ControllerResult<Void> getErrorResult(String code, String message, KeyValuePair<String, String> keyValuePair) {
+       ControllerResultError error = ControllerResultError.builder()
                 .code(code)
                 .message(message)
-                .details(details)
+                .details(List.of(ControllerResultErrorDetail.builder()
+                        .code(keyValuePair.getKey())
+                        .message(keyValuePair.getValue())
+                        .build()))
                 .build();
 
-        return ControllerResult.<E>builder()
+        return ControllerResult.<Void>builder()
                 .status("error")
                 .error(error)
                 .build();

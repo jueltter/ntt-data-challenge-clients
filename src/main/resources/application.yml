@@ -11,3 +11,9 @@ spring:
     username: postgres
     password: password
     show-sql: true
+logging:
+  level:
+    ec:
+      dev:
+        samagua:
+          ntt_data_challenge_clients: DEBUG

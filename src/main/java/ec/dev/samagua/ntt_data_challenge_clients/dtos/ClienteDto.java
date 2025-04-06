@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -15,11 +15,12 @@ public class ClienteDto {
     private Long id;
     private String nombre;
     private String genero;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String identificacion;
     private String direccion;
     private String telefono;
     private String clienteId;
     private String clave;
     private String estado;
+    private Long edad;
 }

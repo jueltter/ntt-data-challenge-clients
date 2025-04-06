@@ -7,9 +7,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ClienteDtoMapper {
+    //@Mapping(source = "fechaNacimiento", target = "fechaNacimiento", dateFormat = "dd/MM/yyyy")
     ClienteDto entityToDto(Cliente cliente);
 
-    ClienteDto dtoToEntity(ClienteDto clienteDto);
+    //@Mapping(source = "fechaNacimiento", target = "fechaNacimiento", dateFormat = "dd/MM/yyyy")
+    Cliente dtoToEntity(ClienteDto clienteDto);
 
     @Mapping(ignore = true, target = "clave")
     ClienteDto entityToDtoObfuscated(Cliente cliente);

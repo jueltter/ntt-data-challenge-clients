@@ -17,6 +17,30 @@ public class ClienteRepository {
 
     private final ClienteReactiveRepository repository;
 
+    public Mono<Long> countByClienteId(String clienteId) {
+        return repository.countByClienteId(clienteId)
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error counting clients by client ID", error));
+    }
+
+    public Mono<Long> countByIdentificacion(String identificacion) {
+        return repository.countByIdentificacion(identificacion)
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error counting clients by identification", error));
+    }
+
+    public Mono<Cliente> findByIdentificacion(String identificacion) {
+        return repository.findByIdentificacion(identificacion)
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error finding client by identification", error));
+    }
+
+    public Mono<Cliente> findByClienteId(String clienteId) {
+        return repository.findByClienteId(clienteId)
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error finding client by client ID", error));
+    }
+
     public Mono<Cliente> save(Cliente cliente) {
         return repository.save(cliente)
                 .onErrorMap(RepositoryException::getCreateException)

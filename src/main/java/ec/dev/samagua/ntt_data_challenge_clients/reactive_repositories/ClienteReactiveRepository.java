@@ -6,4 +6,12 @@ import reactor.core.publisher.Mono;
 
 public interface ClienteReactiveRepository extends ReactiveCrudRepository<Cliente, Long> {
 
+    Mono<Cliente> findByIdentificacion(String identificacion);
+
+    Mono<Cliente> findByClienteId(String clienteId);
+
+    Mono<Long> countByClienteId(String clienteId);
+
+    Mono<Long> countByIdentificacion(String identificacion);
+
 }

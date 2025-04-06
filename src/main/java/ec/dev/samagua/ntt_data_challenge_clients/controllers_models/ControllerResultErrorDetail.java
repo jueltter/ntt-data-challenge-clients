@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ControllerResultErrorDetail {
     private String code;
-    private String message;
     private String field;
-    private String value;
+    private String message;
+    //private String value;
 
 }
