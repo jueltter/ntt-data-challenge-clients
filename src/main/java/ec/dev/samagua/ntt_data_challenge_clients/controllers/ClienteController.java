@@ -24,9 +24,9 @@ public class ClienteController {
     private final ClienteDtoMapper mapper; // ignore
 
     @GetMapping("/clientes")
-    public Mono<ResponseEntity<ControllerResult<List<ClienteDto>>>> findAll(@RequestParam(name = "cliente-id", required = false) String clienteId) {
-        log.debug("executing GET /clientes");
-        Mono<List<Cliente>> entities = service.search(clienteId);
+    public Mono<ResponseEntity<ControllerResult<List<ClienteDto>>>> search(@RequestParam(name = "nombre", required = false) String nombre) {
+        log.debug("executing GET /clientes, nombre: {}", nombre);
+        Mono<List<Cliente>> entities = service.search(nombre);
         return entities.map(obj -> {
             ControllerResult<List<ClienteDto>> body = ControllerResult.getSuccessResult(obj.stream()
                     .map(mapper::entityToDtoObfuscated)
@@ -34,7 +34,7 @@ public class ClienteController {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(body);
-        });
+        }).doOnSuccess(obj -> log.debug("GET /clientes response: {}", obj));
     }
 
     @PostMapping("/clientes")
@@ -49,7 +49,7 @@ public class ClienteController {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(body);
-        });
+        }).doOnSuccess(obj -> log.debug("POST /clientes response: {}", obj));
     }
 
     @PutMapping("/clientes/{id}")
@@ -64,22 +64,22 @@ public class ClienteController {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(body);
-        });
+        }).doOnSuccess(obj -> log.debug("PUT /clientes response: {}", obj));
     }
 
     @PatchMapping("/clientes/{id}")
-    public Mono<ResponseEntity<ControllerResult<ClienteDto>>> updatePatch(@PathVariable Long id, @RequestBody ClienteDto dto) {
+    public Mono<ResponseEntity<ControllerResult<ClienteDto>>> patch(@PathVariable Long id, @RequestBody ClienteDto dto) {
         Cliente entity = mapper.dtoToEntity(dto);
         log.debug("executing PATCH /clientes, body: {}", dto);
         log.debug("executing PATCH /clientes, bodyToEntity: {}", entity);
 
-        Mono<Cliente> entityAsMono = service.updatePatch(id, entity);
+        Mono<Cliente> entityAsMono = service.patch(id, entity);
         return entityAsMono.map(obj -> {
             ControllerResult<ClienteDto> body = ControllerResult.getSuccessResult(mapper.entityToDtoObfuscated(obj));
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(body);
-        });
+        }).doOnSuccess(obj -> log.debug("PATCH /clientes response: {}", obj));
     }
 
     @DeleteMapping("/clientes/{id}")
@@ -93,7 +93,7 @@ public class ClienteController {
                 .status(HttpStatus.OK)
                 .body(body);
 
-        return voidMono.then(Mono.just(response));
+        return voidMono.then(Mono.just(response)).doOnSuccess(obj -> log.debug("DELETE /clientes response: {}", obj));
     }
 
 

@@ -23,7 +23,7 @@ public class Cliente extends Persona {
     private static final List<String> GENEROS = List.of("MALE", "FEMALE", "PREFER NOT TO SAY");
     private static final List<String> ESTADOS = List.of("TRUE", "FALSE");
 
-    @Column(value= "clienteId")
+    @Column(value= "cliente_id")
     private String clienteId;
 
     @Column(value= "clave")
@@ -42,7 +42,7 @@ public class Cliente extends Persona {
         return getId() != null && getId() > 0;
     }
 
-    public DataValidationResult validateForCreating(Long countIdentificacion, Long countClienteId) {
+    public DataValidationResult validateForCreating(Long countIdentificacion, Long countClienteId, Long countNombre) {
         Map<String, String> errors = new HashMap<>();
 
         // validate id
@@ -51,8 +51,13 @@ public class Cliente extends Persona {
         }
 
         // validate client name
-        if (this.getNombre() == null || this.getNombre().isBlank()) {
-            errors.put("nombre", "is mandatory");
+        if (countNombre > 0) {
+            errors.put("nombre", "is already in use");
+        }
+        else {
+            if (this.getNombre() == null || this.getNombre().isBlank()) {
+                errors.put("nombre", "is mandatory");
+            }
         }
 
         // validate client gender
@@ -123,12 +128,12 @@ public class Cliente extends Persona {
                 .build();
     }
 
-    public DataValidationResult validateForUpdating(IdentityFieldWrapper identificacionWrapper, IdentityFieldWrapper clienteIdWrapper) {
+    public DataValidationResult validateForUpdating(IdentityFieldWrapper identificacionWrapper, IdentityFieldWrapper clienteIdWrapper, IdentityFieldWrapper nombreWrapper) {
         Map<String, String> errors = new HashMap<>();
 
         // validate client name
-        if (this.getNombre() == null || this.getNombre().isBlank()) {
-            errors.put("nombre", "is mandatory");
+        if (!nombreWrapper.noChange() && nombreWrapper.count() > 0) {
+            errors.put("nombre", "is already in use");
         }
 
         // validate client gender
@@ -189,12 +194,12 @@ public class Cliente extends Persona {
                 .build();
     }
 
-    public DataValidationResult validateForPatching(IdentityFieldWrapper identificacionWrapper, IdentityFieldWrapper clienteIdWrapper) {
+    public DataValidationResult validateForPatching(IdentityFieldWrapper identificacionWrapper, IdentityFieldWrapper clienteIdWrapper, IdentityFieldWrapper nombreWrapper) {
         Map<String, String> errors = new HashMap<>();
 
         // validate client name
-        if (this.getNombre() != null && this.getNombre().isBlank()) {
-            errors.put("nombre", "is mandatory");
+        if (this.getNombre() != null && !nombreWrapper.noChange() && nombreWrapper.count() > 0) {
+            errors.put("nombre", "is already in use");
         }
 
         // validate client gender

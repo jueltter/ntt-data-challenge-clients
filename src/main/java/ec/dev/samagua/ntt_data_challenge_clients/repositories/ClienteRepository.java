@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -28,11 +29,24 @@ public class ClienteRepository {
                 .doOnError(error -> log.error("Error counting clients by identification", error));
     }
 
-    public Mono<List<Cliente>> findByClienteId(String clienteId) {
-        return repository.findByClienteId(clienteId)
+    public Mono<Long> countByNombre(String nombre) {
+        return repository.countByNombre(nombre)
                 .onErrorMap(RepositoryException::getReadException)
-                .doOnError(error -> log.error("Error finding client by client ID", error))
-                .map(List::of);
+                .doOnError(error -> log.error("Error counting clients by name", error));
+    }
+
+    public Mono<List<Cliente>> findByNombre(String nombre) {
+        return repository.findByNombre(nombre)
+                .defaultIfEmpty(Cliente.getDefaultInstance())
+                .onErrorMap(RepositoryException::getReadException)
+                .doOnError(error -> log.error("Error finding client by name", error))
+                .map(cliente  -> {
+                    if (!cliente.isValidId()) {
+                        return Collections.emptyList();
+                    } else {
+                        return List.of(cliente);
+                    }
+                });
     }
 
     public Mono<Cliente> save(Cliente cliente) {
@@ -57,7 +71,7 @@ public class ClienteRepository {
         return repository.findById(id)
                 .onErrorMap(RepositoryException::getReadException)
                 .doOnError(error -> log.error("Error finding client", error))
-                .defaultIfEmpty(Cliente.getDefaultInstance());
+                    .defaultIfEmpty(Cliente.getDefaultInstance());
     }
 
     public Mono<List<Cliente>> findAll() {

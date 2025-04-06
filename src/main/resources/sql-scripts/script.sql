@@ -8,12 +8,12 @@ fecha_nacimiento DATE,
 identificacion VARCHAR(50),
 direccion VARCHAR(255),
 telefono VARCHAR(50),
-clienteId VARCHAR(50),
+cliente_id VARCHAR(50),
 clave VARCHAR(255),
 estado VARCHAR(50)
 );
 
-INSERT INTO cliente (nombre, genero, fecha_nacimiento, identificacion, direccion, telefono, clienteId, clave, estado) VALUES
+INSERT INTO cliente (nombre, genero, fecha_nacimiento, identificacion, direccion, telefono, cliente_id, clave, estado) VALUES
 ('Paul Atreides', UPPER('Male'), '1965-08-01', 'ID00123456', 'Arrakis', '555-1234', 'C001234567', MD5('password1'), UPPER('True')),
 ('Leia Organa', UPPER('Female'), '1956-10-21', 'ID00234567', 'Alderaan', '555-5678', 'C002345678', MD5('password2'), UPPER('True')),
 ('Ender Wiggin', UPPER('Male'), '1985-06-15', 'ID00345678', 'Battle School', '555-8765', 'C003456789', MD5('password3'), UPPER('True')),
