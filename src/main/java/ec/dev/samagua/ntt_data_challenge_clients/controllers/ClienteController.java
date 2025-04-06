@@ -82,5 +82,19 @@ public class ClienteController {
         });
     }
 
+    @DeleteMapping("/clientes/{id}")
+    public Mono<ResponseEntity<ControllerResult<Void>>> delete(@PathVariable Long id) {
+        log.debug("executing DELETE /clientes, id: {}", id);
+
+        Mono<Void> voidMono = service.delete(id);
+
+        ControllerResult<Void> body = ControllerResult.getSuccessResult();
+        ResponseEntity<ControllerResult<Void>> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .body(body);
+
+        return voidMono.then(Mono.just(response));
+    }
+
 
 }

@@ -26,6 +26,12 @@ public class ControllerResult<E> {
                 .build();
     }
 
+    public static ControllerResult<Void> getSuccessResult() {
+        return ControllerResult.<Void>builder()
+                .status("success")
+                .build();
+    }
+
     public static ControllerResult<Void> getErrorResultFromInvalidDataException(InvalidDataException exception) {
         List<ControllerResultErrorDetail> details = exception.getErrors().entrySet().stream().map(entry -> ControllerResultErrorDetail.builder()
                         .field(entry.getKey())

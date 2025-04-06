@@ -9,7 +9,7 @@ public interface ClienteService {
     Mono<Cliente> create(Cliente cliente);
     Mono<Cliente> update(Long id, Cliente newData);
     Mono<Cliente> updatePatch(Long id, Cliente newData);
-    Mono<Void> delete(Cliente cliente);
+    Mono<Void> delete(Long id);
     Mono<Cliente> findById(Long id);
     Mono<List<Cliente>> findAll();
 }

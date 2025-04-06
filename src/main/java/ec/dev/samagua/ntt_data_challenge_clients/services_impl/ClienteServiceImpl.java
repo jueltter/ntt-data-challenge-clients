@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.cors.reactive.PreFlightRequestHandler;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
@@ -25,7 +24,6 @@ import java.util.Objects;
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository repository;
-    private final PreFlightRequestHandler preFlightRequestHandler;
 
     @Override
     public Mono<Cliente> create(Cliente cliente) {
@@ -124,8 +122,13 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Mono<Void> delete(Cliente cliente) {
-        return null;
+    public Mono<Void> delete(Long id) {
+        return repository.findById(id).flatMap(entity -> {
+            if (!entity.isValidId()) {
+                return Mono.error(InvalidDataException.getInstance(Collections.singletonMap("id", "is invalid")));
+            }
+            return repository.delete(entity);
+        });
     }
 
     @Override
