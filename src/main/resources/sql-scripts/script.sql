@@ -1,5 +1,23 @@
-drop table if exists cliente cascade;
+-- Drop the database if it already exists
+DROP DATABASE IF EXISTS "ntt-data-challenge-clients" WITH (FORCE);
 
+-- Create the new database
+CREATE DATABASE "ntt-data-challenge-clients"
+WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+-- Connect to the newly created database using pgAdmin or a psql-specific command
+-- \connect database
+
+-- Drop the table if it already exists
+DROP TABLE IF EXISTS cliente CASCADE;
+
+-- Create a table for the clients
 CREATE TABLE cliente (
 id BIGSERIAL PRIMARY KEY,
 nombre VARCHAR(255),
@@ -13,6 +31,7 @@ clave VARCHAR(255),
 estado VARCHAR(50)
 );
 
+/*
 INSERT INTO cliente (nombre, genero, fecha_nacimiento, identificacion, direccion, telefono, cliente_id, clave, estado) VALUES
 ('Paul Atreides', UPPER('Male'), '1965-08-01', 'ID00123456', 'Arrakis', '555-1234', 'C001234567', MD5('password1'), UPPER('True')),
 ('Leia Organa', UPPER('Female'), '1956-10-21', 'ID00234567', 'Alderaan', '555-5678', 'C002345678', MD5('password2'), UPPER('True')),
@@ -24,5 +43,4 @@ INSERT INTO cliente (nombre, genero, fecha_nacimiento, identificacion, direccion
 ('Trillian', UPPER('Female'), '1979-03-11', 'ID00890123', 'Heart of Gold', '555-2222', 'C008901234', MD5('password8'), UPPER('True')),
 ('Gully Foyle', UPPER('Male'), '1956-01-01', 'ID00901234', 'Nomad', '555-3333', 'C009012345', MD5('password9'), UPPER('True')),
 ('Molly Millions', UPPER('Female'), '1984-07-01', 'ID01012345', 'Chiba City', '555-4444', 'C010123456', MD5('password10'), UPPER('True'));
-
-select * from cliente;
+*/
